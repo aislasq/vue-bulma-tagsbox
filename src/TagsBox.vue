@@ -1,8 +1,8 @@
 <template>
     <div class="textarea">
-        <span v-for="(tag, index) in tags" class="tag" :class="tagClass">
+        <span v-for="(tag, index) in tags" :class="tagClass" class="tag" style="float: left;">
             <span>{{tag}}</span>
-            <button @click="removeTag(index)" title="Removing tag" class="delete is-small"></button>
+            <button v-if="withDeleteButton" @click="removeTag(index)" title="Removing tag" class="delete is-small"></button>
         </span>
         <input  v-model="input" class="tagsinput"
                 @keyup.188="splitTagComma" 
@@ -24,6 +24,11 @@ export default {
             type: String,
             required: false,
             default: 'is-primary'
+        },
+        withDeleteButton: {
+            type: Boolean,
+            required: false,
+            default: true
         }
     },
     data: function(params) {
@@ -33,13 +38,15 @@ export default {
     },
     methods: {
         addTag: function(value) {
-            if (value === null) return;
-            if(this.tags.indexOf(value.toUpperCase()) <= -1  ){
-                this.$emit('add-tag-failed', value.toUpperCase() );
+            if (value === null || value === '') return;
+
+            let toAdd = value.toUpperCase();
+            if(this.tags.indexOf() <= -1 ){
+                this.$emit('add-tag-duplicate', toAdd );
             }
-            if (value !== '') {
-                this.tags.push(value.toUpperCase());
-                this.$emit('added-tag', value.toUpperCase() );
+            else{
+                this.tags.push(toAdd);
+                this.$emit('added-tag', toAdd );
             }
         },
         removeTag: function(index) {
@@ -64,10 +71,6 @@ export default {
 }
 </script>
 <style>
-    div.textarea span.tag {
-        float: left;
-    }
-
     input.tagsinput {
         width: auto;
         margin: 0px;
