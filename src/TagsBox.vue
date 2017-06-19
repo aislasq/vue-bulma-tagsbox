@@ -1,23 +1,31 @@
 <template>
     <div class="textarea">
-        <span v-for="(tag, index) in tags" class="tag is-primary">
+        <span v-for="(tag, index) in tags" class="tag" :class="tagClass">
             <span>{{tag}}</span>
             <button @click="removeTag(index)" title="Removing tag" class="delete is-small"></button>
         </span>
         <input  v-model="input" class="tagsinput"
-                @keyup.comma="splitTagComma" 
-                @keyup.semicolon="splitTagSemiColon"
-                @keydown.delete="backspace" >
+                @keyup.188="splitTagComma" 
+                @keyup.186="splitTagSemiColon"
+                @keydown.8="backspace" >
     </div>
 </template>
 
 <script>
-Vue.config.keyCodes.comma = 188
-Vue.config.keyCodes.semicolon = 186
-Vue.config.keyCodes.backspace = 8
 
 export default {
-    props: ['tags'],
+    props: {
+        tags: {
+            type: Array,
+            required: false,
+            default: []
+        },
+        tagClass: {
+            type: String,
+            required: false,
+            default: 'is-primary'
+        }
+    },
     data: function(params) {
         return {
             input: ''
@@ -26,17 +34,17 @@ export default {
     methods: {
         addTag: function(value) {
             if (value === null) return;
-            if(this.names.indexOf(value.toUpperCase()) <= -1  )){
+            if(this.tags.indexOf(value.toUpperCase()) <= -1  ){
                 this.$emit('add-tag-failed', value.toUpperCase() );
             }
             if (value !== '') {
-                this.names.push(value.toUpperCase());
+                this.tags.push(value.toUpperCase());
                 this.$emit('added-tag', value.toUpperCase() );
             }
         },
         removeTag: function(index) {
-            let val = this.names[index];
-            this.names.splice(index, 1);
+            let val = this.tags[index];
+            this.tags.splice(index, 1);
             this.$emit('removed-tag', val);
         },
         backspace: function(value){
