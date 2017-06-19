@@ -2,7 +2,7 @@
 
 Tags Box component for Vue with Bulma. Each comma separated value in a textarea input turns into a tag.
 
-![alt text](https://github.com/aislasq/vue-bulma-tagsbox/images/image.png "Logo Title Text 1")
+![alt text](https://github.com/aislasq/vue-bulma-tagsbox/blob/master/images/image.png "Logo Title Text 1")
 
 
 ## Installation
