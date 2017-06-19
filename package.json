@@ -1,0 +1,8 @@
+{
+  "name": "vue-bulma-tagsbox",
+  "version": "0.0.1",
+  "description": "vue component, using bulma css, for creating an input textarea where each comma separated value turns into a tag.",
+  "main": "index.js",
+  "author": "Andres Islas <aislasq@gmail.com>",
+  "license": "MIT"
+}
