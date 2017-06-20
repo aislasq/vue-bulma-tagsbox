@@ -2,7 +2,7 @@
     <div class="textarea" @click="focusInput" style="cursor: text;">
         <span v-for="(tag, index) in tags" :class="tagClass" class="tag" style="float: left;">
             <span>{{tag}}</span>
-            <button v-if="withDeleteButton" @click="removeTag(index)" title="Removing tag" class="delete is-small"></button>
+            <button v-if="withDeleteButton" type="button" @click="removeTag(index)" title="Remove tag" class="delete is-small"></button>
         </span>
         <input  class="tagsinput" ref='inputTextBox' v-model="input" 
                 @keyup.188="splitTagComma" 
@@ -17,8 +17,7 @@ export default {
     props: {
         tags: {
             type: Array,
-            required: false,
-            default: []
+            required: true
         },
         tagClass: {
             type: String,
@@ -45,17 +44,14 @@ export default {
 
             let toAdd = value.toUpperCase();
             if(this.tags.indexOf(toAdd) == -1 ){
-                this.tags.push(toAdd);
-                this.$emit('added-tag', toAdd );
+                this.$emit('add-tag', toAdd );
             }
             else{
-                this.$emit('add-tag-duplicate', toAdd );
+                this.$emit('duplicate-tag', toAdd );
             }
         },
         removeTag: function(index) {
-            let val = this.tags[index];
-            this.tags.splice(index, 1);
-            this.$emit('removed-tag', val);
+            this.$emit('remove-tag', index);
         },
         backspace: function(value){
     	    if(this.input === ''){

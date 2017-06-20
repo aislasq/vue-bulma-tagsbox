@@ -14,24 +14,24 @@ $ npm install https://github.com/aislasq/vue-bulma-tagsbox.git
 
 #### Props:
 
-* **tags:** The array holding your tags, it is not required.
+* **tags:** The array holding your tags, it is required to correctly show your current tags.
 * **tagClass:** The string holding the class of the tag, it is not required, defaults to 'is-primary'.
 * **withDeleteButton:** This boolean restricts the delete button inside the tag, defaults to true.
 
 #### Methods: 
 
-* **added-tag:** Called after a tag is added to the array with the tag name.
-* **removed-tag:** Called after a tag is removed from the array with the tag name.
-* **add-tag-duplicate:** Called after a tag failed to be added to the array because it is duplicated.
+* **add-tag:** Called after a tag is validated by the separators, it includes the tag name (input string).
+* **remove-tag:** Call after a request to remove a tag with the index.
+* **duplicate-tag:** Called when a tag failed the duplicate validation with the name of the tag.
 
 ```vue
 <template>
   <div>
     <tags-box :tags="tags" 
               tagColor="is-info" 
-              @added-tag="val => addedNewTag(val)"
-              @removed-tag="val => removedTag(val)"
-              @add-tag-duplicate="val => duplicateTag(val)">
+              @add-tag="val => addTag(val)"
+              @remove-tag="val => removeTag(val)"
+              @duplicate-tag="val => duplicateTag(val)">
     </tags-box>
   </div>
 </template>
@@ -47,10 +47,12 @@ export default {
     return { tags: [] }
   },
   methods: {
-    addedNewTag: function(value){
+    addTag: function(value){
+      this.tags.push(tag);
       console.log('Added new Tag: ' + value);
     },
-    removedTag: function(value){
+    removeTag: function(value){
+      this.tags.splice(index, 1);
       console.log('Removed Tag: ' + value);
     },
     duplicateTag: function(value){
